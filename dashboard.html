@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard SCADA</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        .dashboard {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        .sensor {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            padding: 20px;
+            border-radius: 5px;
+            width: 200px;
+        }
+        .sensor h3 {
+            margin: 0;
+            font-size: 18px;
+            color: #333;
+        }
+        .sensor p {
+            font-size: 24px;
+            color: #555;
+        }
+        .sensor p span {
+            font-weight: bold;
+        }
+    </style>
+    <script>
+        // Función para obtener y actualizar los datos del servidor
+        function obtenerDatos() {
+            fetch('/api/datos')
+                .then(response => response.json())
+                .then(data => {
+                    // Actualizar los valores en la interfaz
+                    for (const [key, value] of Object.entries(data)) {
+                        const elemento = document.getElementById(key);
+                        if (elemento) {
+                            elemento.innerHTML = value + " " + (key === "Temperatura" ? "°C" : 
+                            key === "Presión" ? "hPa" : key === "Nivel" ? "%" : "u");
+                        }
+                    }
+                });
+        }
+
+        // Actualizar los datos cada 5 segundos
+        setInterval(obtenerDatos, 5000);
+        
+        // Obtener los datos inicialmente
+        window.onload = obtenerDatos;
+    </script>
+</head>
+<body>
+    <h1>Dashboard SCADA - Datos de Sensores</h1>
+    <div class="dashboard">
+        <div class="sensor">
+            <h3>Temperatura</h3>
+            <p id="Temperatura">Cargando...</p>
+        </div>
+        <div class="sensor">
+            <h3>Presión</h3>
+            <p id="Presión">Cargando...</p>
+        </div>
+        <div class="sensor">
+            <h3>Nivel</h3>
+            <p id="Nivel">Cargando...</p>
+        </div>
+        <div class="sensor">
+            <h3>Radiación Solar</h3>
+            <p id="Radiación Solar">Cargando...</p>
+        </div>
+        <div class="sensor">
+            <h3>Humedad</h3>
+            <p id="Humedad">Cargando...</p>
+        </div>
+        <div class="sensor">
+            <h3>Velocidad del Viento</h3>
+            <p id="Velocidad del Viento">Cargando...</p>
+        </div>
+        <div class="sensor">
+            <h3>pH</h3>
+            <p id="pH">Cargando...</p>
+        </div>
+        <div class="sensor">
+            <h3>Oxígeno Disuelto</h3>
+            <p id="Oxígeno Disuelto">Cargando...</p>
+        </div>
+        <div class="sensor">
+            <h3>Radiación UV</h3>
+            <p id="Radiación UV">Cargando...</p>
+        </div>
+        <div class="sensor">
+            <h3>Lluvia</h3>
+            <p id="Lluvia">Cargando...</p>
+        </div>
+    </div>
+</body>
+</html>
